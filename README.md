@@ -1,0 +1,2 @@
+# Dummy-App
+Dummy app is a single page that is part of an application for sports enthusiasts to register their names to lists of their favourite sporting activites and what days they are available to participate.
