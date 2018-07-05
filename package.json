@@ -1,0 +1,28 @@
+{
+  "name": "sports_enthusiasts",
+  "version": "1.0.0",
+  "description": "A form for cyclists to add their name to the list",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/105ron/sports-enthusiasts.git"
+  },
+  "author": "Rhys",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/105ron/sports-enthusiasts/issues"
+  },
+  "homepage": "https://github.com/105ron/sports-enthusiasts#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "browser-sync": "^2.18.5",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-babel": "^7.0.1",
+    "gulp-sass": "^4.0.1"
+  }
+}
