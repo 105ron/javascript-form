@@ -1,21 +1,33 @@
 $bright-green: #34A00F;
 $max-page-width: 860px;
 $grey:	#9f9f9f;
-$light-grey: #DDD;
+$intermediate-grey: #CECECE;
+$light-grey: #F0F0F0;
+$black: #000;
 
 html {
+  box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
 }
 
 .green {
   color: $bright-green;
 }
 
+.container {
+  width: $max-page-width;
+  margin: 0 auto;
+}
+
+/* ****************************************
+Top Navbar
+**************************************** */
 .nav-wrapper {
-  border-bottom: 1px solid #000;
-  .menu-container {
-    width: $max-page-width;
-    margin: 0 auto;
+  border-bottom: 1px solid $black;
+  .menu {
     display: flex;
     justify-content: space-between;
   }
@@ -36,11 +48,12 @@ html {
   }
 }
 
-.location-container {
-  width: $max-page-width;
+/* ****************************************
+Location Container
+**************************************** */
+.location {
   display: flex;
   align-items: center;
-  margin: 0 auto;
   padding: 8px 0;
   font-size: 14px;
   span {
@@ -60,6 +73,48 @@ html {
     &:hover {
       text-decoration: underline;
       text-decoration-style: dotted;
+    }
+  }
+}
+
+/* ****************************************
+Activity Bar
+**************************************** */
+.activity-bar {
+  background-color: $light-grey;
+  border-top: 1px solid $intermediate-grey;
+  .activity {
+    display: flex;
+    list-style: none;
+    padding: 25px 0;
+    .activities {
+      display:flex;
+      align-items: center;
+      margin: 0 25px 0 5px;
+      &>i {
+        font-size: 28px;
+        color:$grey;
+      }
+      &:last-child>i {
+        color:$bright-green;
+      }
+    }
+    &>:last-child {
+      margin: 0 0 0 auto;
+    }
+  }
+  .headings-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 8px;
+    font-size: 12px;
+    color: $intermediate-grey;
+    .major-heading {
+      color: $black;
+      font-weight: bold;
+    }
+    .color-green {
+      color: $bright-green;
     }
   }
 }
