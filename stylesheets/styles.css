@@ -61,7 +61,8 @@ Activity Bar
 **************************************** */
 .activity-bar {
   background-color: #F0F0F0;
-  border-top: 1px solid #CECECE; }
+  border-top: 1px solid #CECECE;
+  margin-bottom: 45px; }
   .activity-bar .activity {
     display: flex;
     list-style: none;
@@ -88,3 +89,44 @@ Activity Bar
       font-weight: bold; }
     .activity-bar .headings-container .color-green {
       color: #34A00F; }
+
+/* ****************************************
+Help
+**************************************** */
+.help {
+  display: flex;
+  justify-content: space-between;
+  background-color: #F0F0F0;
+  padding: 10px 5px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border: 1px solid #CECECE; }
+  .help span {
+    color: #000;
+    font-weight: bold;
+    font-size: 12px; }
+  .help button {
+    border: none;
+    padding: 0;
+    color: #34A00F;
+    background: none; }
+    .help button:hover {
+      cursor: pointer; }
+
+/* ****************************************
+Help-slider
+**************************************** */
+.help-slider {
+  border: 1px solid #CECECE;
+  border-top: none;
+  padding: 12px;
+  color: #9f9f9f;
+  font-size: 14px; }
+  .help-slider i {
+    font-size: 90px;
+    float: left;
+    margin: 0 12px 12px 0; }
+  .help-slider p {
+    margin: 0 0 20px 0; }
+  .help-slider p:last-child {
+    margin: 0; }

@@ -83,6 +83,7 @@ Activity Bar
 .activity-bar {
   background-color: $light-grey;
   border-top: 1px solid $intermediate-grey;
+  margin-bottom: 45px;
   .activity {
     display: flex;
     list-style: none;
@@ -116,5 +117,56 @@ Activity Bar
     .color-green {
       color: $bright-green;
     }
+  }
+}
+
+/* ****************************************
+Help
+**************************************** */
+
+.help {
+  display: flex;
+  justify-content: space-between;
+  background-color: $light-grey;
+  padding: 10px 5px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border: 1px solid $intermediate-grey;
+  span {
+    color: $black;
+    font-weight: bold;
+    font-size: 12px;
+  }
+  button {
+    border: none;
+    padding: 0;
+    color: $bright-green;
+    background: none;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+/* ****************************************
+Help-slider
+**************************************** */
+
+.help-slider {
+  border: 1px solid $intermediate-grey;
+  border-top: none;
+  padding: 12px;
+  color: $grey;
+  font-size: 14px;
+  i {
+    font-size: 90px;
+    float:left;
+    margin: 0 12px 12px 0;
+  }
+  & p {
+    margin: 0 0 20px 0;
+  }
+  & p:last-child {
+    margin:0;
   }
 }
