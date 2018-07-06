@@ -35,7 +35,7 @@ gulp.task('browserSync', function() {
     server: {
       baseDir: ''
     },
-    browser: ["google chrome", "firefox"]
+    browser: ["google chrome", "firefox", "firefox developer edition"]
   })
 })
 
