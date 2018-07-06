@@ -7,10 +7,12 @@ html {
 .nav-wrapper {
   border-bottom: 1px solid #000; }
   .nav-wrapper .menu-container {
-    width: 720px;
+    width: 860px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between; }
+  .nav-wrapper .hamburger {
+    margin-left: 1px; }
   .nav-wrapper .heading {
     display: inline;
     margin: 10px 8px;
@@ -20,3 +22,26 @@ html {
     align-items: center; }
   .nav-wrapper .user {
     margin-left: 8px; }
+
+.location-container {
+  width: 860px;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  padding: 8px 0;
+  font-size: 14px; }
+  .location-container span {
+    font-size: 18px; }
+  .location-container .arrow {
+    margin: 0 6px;
+    color: #DDD; }
+  .location-container .current-page {
+    color: #9f9f9f;
+    font-size: 14px; }
+  .location-container .pages-link {
+    text-decoration: none;
+    color: #34A00F; }
+    .location-container .pages-link:hover {
+      text-decoration: underline;
+      -webkit-text-decoration-style: dotted;
+              text-decoration-style: dotted; }
