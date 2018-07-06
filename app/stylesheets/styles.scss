@@ -124,7 +124,14 @@ Activity Bar
 Help
 **************************************** */
 
+.slider-bucket {
+  position: relative;
+  overflow: hidden;
+}
+
 .help {
+  position: relative;
+  z-index: 3;
   display: flex;
   justify-content: space-between;
   background-color: $light-grey;
@@ -153,20 +160,30 @@ Help-slider
 **************************************** */
 
 .help-slider {
-  border: 1px solid $intermediate-grey;
-  border-top: none;
-  padding: 12px;
+  &.active {
+    max-height: 230px;
+    transition: max-height 0.7s ease;
+  }
+  max-height: 0;
+  transition: max-height 0.7s ease;
+  position: relative;
+  top: -2px; //to hide the borders when collapsed
+  z-index: 1; //border goes under .help with z-index of 3
+  overflow: hidden;
   color: $grey;
   font-size: 14px;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border: 1px solid $intermediate-grey;
   i {
     font-size: 90px;
     float:left;
-    margin: 0 12px 12px 0;
+    margin: 12px 12px 12px 12px;
   }
   & p {
-    margin: 0 0 20px 0;
+    margin: 12px 12px 22px 12px;
   }
   & p:last-child {
-    margin:0;
+    margin: 0 12px 12px 12px;
   }
 }

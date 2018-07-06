@@ -93,7 +93,13 @@ Activity Bar
 /* ****************************************
 Help
 **************************************** */
+.slider-bucket {
+  position: relative;
+  overflow: hidden; }
+
 .help {
+  position: relative;
+  z-index: 3;
   display: flex;
   justify-content: space-between;
   background-color: #F0F0F0;
@@ -117,16 +123,25 @@ Help
 Help-slider
 **************************************** */
 .help-slider {
-  border: 1px solid #CECECE;
-  border-top: none;
-  padding: 12px;
+  max-height: 0;
+  transition: max-height 0.7s ease;
+  position: relative;
+  top: -2px;
+  z-index: 1;
+  overflow: hidden;
   color: #9f9f9f;
-  font-size: 14px; }
+  font-size: 14px;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border: 1px solid #CECECE; }
+  .help-slider.active {
+    max-height: 230px;
+    transition: max-height 0.7s ease; }
   .help-slider i {
     font-size: 90px;
     float: left;
-    margin: 0 12px 12px 0; }
+    margin: 12px 12px 12px 12px; }
   .help-slider p {
-    margin: 0 0 20px 0; }
+    margin: 12px 12px 22px 12px; }
   .help-slider p:last-child {
-    margin: 0; }
+    margin: 0 12px 12px 12px; }
