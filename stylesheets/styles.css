@@ -1,3 +1,4 @@
+@charset "UTF-8";
 html {
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif; }
@@ -160,38 +161,126 @@ Registration
 .registration .form {
   display: flex; }
 
-.registration .card {
-  flex: 1;
-  height: 100px; }
-
 .registration .card + .card {
-  margin-left: 60px; }
+  margin-left: 60px;
+  flex: 17;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap; }
 
-.registration .text-label {
-  position: relative;
-  display: block;
-  margin-top: 30px; }
-  .registration .text-label .description {
-    float: left;
-    font-weight: bold;
-    font-size: 12px; }
-  .registration .text-label .optional {
-    float: right;
-    font-size: 12px;
-    color: #9f9f9f; }
-  .registration .text-label input {
+.registration .card {
+  flex: 11; }
+  .registration .card .text-label {
+    position: relative;
     display: block;
-    width: 100%;
-    border: 1px solid #CECECE;
-    border-radius: 3px;
+    margin-top: 30px; }
+    .registration .card .text-label .description {
+      float: left;
+      font-weight: bold;
+      font-size: 12px; }
+    .registration .card .text-label .optional {
+      float: right;
+      font-size: 12px;
+      color: #9f9f9f; }
+    .registration .card .text-label .text-fields {
+      display: block;
+      width: 100%;
+      border: 1px solid #CECECE;
+      border-radius: 3px;
+      font-size: 14px;
+      height: 25px; }
+      .registration .card .text-label .text-fields + span {
+        position: absolute;
+        top: 41px;
+        color: #CECECE;
+        font-size: 12px;
+        opacity: 0;
+        transition: all 1s; }
+      .registration .card .text-label .text-fields[name="name"] + span:after {
+        content: "Please enter your full name"; }
+      .registration .card .text-label .text-fields[name="email"] + span:after {
+        content: "Please enter your email address"; }
+      .registration .card .text-label .text-fields[name="city"] + span:after {
+        content: "Please enter your local city (optional)"; }
+      .registration .card .text-label .text-fields:focus + span {
+        opacity: 1;
+        transition: all 0.7s; }
+  .registration .card .forms-heading {
+    font-weight: bold;
+    font-size: 12px;
+    margin: 30px 0 6px 0; }
+  .registration .card .radio-container input {
+    display: none; }
+  .registration .card .radio-container .frequency {
+    position: relative;
+    left: 15px;
+    color: #9f9f9f;
     font-size: 14px;
-    height: 25px; }
-  .registration .text-label .input-focus-label {
-    position: absolute;
-    color: #CECECE;
-    font-size: 14px;
-    opacity: 0;
-    transition: all 0.5s; }
-  .registration .text-label input:focus + .input-focus-label {
-    opacity: 1;
-    transition: all 1s; }
+    margin-right: 8px; }
+    .registration .card .radio-container .frequency > span {
+      cursor: pointer;
+      margin: 0 35px 0 8px; }
+      .registration .card .radio-container .frequency > span:hover:before {
+        border: 1px solid #34A00F; }
+      .registration .card .radio-container .frequency > span:before, .registration .card .radio-container .frequency > span:after {
+        content: '';
+        top: 0.5px;
+        margin: auto;
+        position: absolute;
+        left: -15px; }
+      .registration .card .radio-container .frequency > span:before {
+        width: 15px;
+        height: 15px;
+        border: 1px solid #CECECE;
+        border-radius: 15px; }
+      .registration .card .radio-container .frequency > span:after {
+        left: -10.5px;
+        top: 5px;
+        width: 6px;
+        height: 6px;
+        border-radius: 10px;
+        background-color: none; }
+  .registration .card .radio-container input[type="radio"]:checked + .frequency > span:before {
+    border: 1px solid #34A00F; }
+  .registration .card .radio-container input[type="radio"]:checked + .frequency > span:after {
+    background-color: black; }
+  .registration .card .checkbox {
+    margin: 30px 0 6px 0; }
+  .registration .card .checkbox-container {
+    display: flex;
+    justify-content: space-between; }
+    .registration .card .checkbox-container input {
+      display: none; }
+    .registration .card .checkbox-container .days {
+      position: relative;
+      left: 15px;
+      color: #9f9f9f;
+      font-size: 14px;
+      margin-right: 8px; }
+      .registration .card .checkbox-container .days > span {
+        cursor: pointer;
+        margin: 0 35px 0 8px; }
+        .registration .card .checkbox-container .days > span:hover:before {
+          border: 1px solid #34A00F; }
+        .registration .card .checkbox-container .days > span:before, .registration .card .checkbox-container .days > span:after {
+          content: '';
+          top: 0.5px;
+          margin: auto;
+          position: absolute;
+          left: -15px; }
+        .registration .card .checkbox-container .days > span:before {
+          width: 15px;
+          height: 15px;
+          border: 1px solid #CECECE;
+          border-radius: 2px; }
+        .registration .card .checkbox-container .days > span:after {
+          content: '';
+          color: #000;
+          top: -1px;
+          left: -12.5px; }
+    .registration .card .checkbox-container input[type="checkbox"]:checked + .days > span:before {
+      border: 1px solid #34A00F; }
+    .registration .card .checkbox-container input[type="checkbox"]:checked + .days > span:after {
+      content: '✓'; }
+  .registration .card .lastelement {
+    margin-top: auto; }
