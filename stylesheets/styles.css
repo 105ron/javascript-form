@@ -211,38 +211,38 @@ Registration
     margin: 30px 0 6px 0; }
   .registration .card .radio-container input {
     display: none; }
-  .registration .card .radio-container .frequency {
+  .registration .card .frequency, .registration .card .days {
     position: relative;
     left: 15px;
     color: #9f9f9f;
     font-size: 14px;
     margin-right: 8px; }
-    .registration .card .radio-container .frequency > span {
+    .registration .card .frequency > span, .registration .card .days > span {
       cursor: pointer;
       margin: 0 35px 0 8px; }
-      .registration .card .radio-container .frequency > span:hover:before {
+      .registration .card .frequency > span:hover:before, .registration .card .days > span:hover:before {
         border: 1px solid #34A00F; }
-      .registration .card .radio-container .frequency > span:before, .registration .card .radio-container .frequency > span:after {
+      .registration .card .frequency > span:before, .registration .card .frequency > span:after, .registration .card .days > span:before, .registration .card .days > span:after {
         content: '';
         top: 0.5px;
         margin: auto;
         position: absolute;
         left: -15px; }
-      .registration .card .radio-container .frequency > span:before {
+      .registration .card .frequency > span:before, .registration .card .days > span:before {
         width: 15px;
         height: 15px;
         border: 1px solid #CECECE;
         border-radius: 15px; }
-      .registration .card .radio-container .frequency > span:after {
+      .registration .card .frequency > span:after, .registration .card .days > span:after {
         left: -10.5px;
         top: 5px;
         width: 6px;
         height: 6px;
         border-radius: 10px;
         background-color: none; }
-  .registration .card .radio-container input[type="radio"]:checked + .frequency > span:before {
+  .registration .card input[type="radio"]:checked + .frequency > span:before {
     border: 1px solid #34A00F; }
-  .registration .card .radio-container input[type="radio"]:checked + .frequency > span:after {
+  .registration .card input[type="radio"]:checked + .frequency > span:after {
     background-color: black; }
   .registration .card .checkbox {
     margin: 30px 0 6px 0; }
@@ -251,33 +251,13 @@ Registration
     justify-content: space-between; }
     .registration .card .checkbox-container input {
       display: none; }
-    .registration .card .checkbox-container .days {
-      position: relative;
-      left: 15px;
-      color: #9f9f9f;
-      font-size: 14px;
-      margin-right: 8px; }
-      .registration .card .checkbox-container .days > span {
-        cursor: pointer;
-        margin: 0 35px 0 8px; }
-        .registration .card .checkbox-container .days > span:hover:before {
-          border: 1px solid #34A00F; }
-        .registration .card .checkbox-container .days > span:before, .registration .card .checkbox-container .days > span:after {
-          content: '';
-          top: 0.5px;
-          margin: auto;
-          position: absolute;
-          left: -15px; }
-        .registration .card .checkbox-container .days > span:before {
-          width: 15px;
-          height: 15px;
-          border: 1px solid #CECECE;
-          border-radius: 2px; }
-        .registration .card .checkbox-container .days > span:after {
-          content: '';
-          color: #000;
-          top: -1px;
-          left: -12.5px; }
+    .registration .card .checkbox-container .days > span:before {
+      border-radius: 2px; }
+    .registration .card .checkbox-container .days > span:after {
+      content: '';
+      color: #000;
+      top: -1px;
+      left: -12.5px; }
     .registration .card .checkbox-container input[type="checkbox"]:checked + .days > span:before {
       border: 1px solid #34A00F; }
     .registration .card .checkbox-container input[type="checkbox"]:checked + .days > span:after {
