@@ -13,6 +13,10 @@ html {
   box-sizing: inherit;
 }
 
+body {
+  min-width: $max-page-width;
+}
+
 .green {
   color: $bright-green;
 }
@@ -123,7 +127,6 @@ Activity Bar
 /* ****************************************
 Help
 **************************************** */
-
 .slider-bucket {
   position: relative;
   overflow: hidden;
@@ -158,7 +161,6 @@ Help
 /* ****************************************
 Help-slider
 **************************************** */
-
 .help-slider {
   &.active {
     max-height: 230px;
@@ -170,6 +172,7 @@ Help-slider
   top: -2px; //to hide the borders when collapsed
   z-index: 1; //border goes under .help with z-index of 3
   overflow: hidden;
+  margin-bottom: 45px;
   color: $grey;
   font-size: 14px;
   border-bottom-left-radius: 3px;
@@ -185,5 +188,59 @@ Help-slider
   }
   & p:last-child {
     margin: 0 12px 12px 12px;
+  }
+}
+
+/* ****************************************
+Registration
+**************************************** */
+.registration {
+  .heading {
+    font-size: 20px;
+    margin-bottom: 0px;
+  }
+  .form {
+    display: flex;
+  }
+  .card {
+    flex: 1;
+    height:100px;
+  }
+  .card + .card  {
+    margin-left: 60px;
+  }
+  .text-label { 
+    position:relative;
+    display: block;
+    margin-top: 30px;
+    .description {
+      float: left;
+      font-weight: bold;
+      font-size: 12px;
+    }
+    .optional {
+      float: right;
+      font-size: 12px;
+      color: $grey;
+    }
+    input {
+      display: block;
+      width: 100%;
+      border: 1px solid $intermediate-grey;
+      border-radius: 3px;
+      font-size: 14px;
+      height: 25px;
+    }
+    .input-focus-label {
+      position: absolute;
+      color: $intermediate-grey;
+      font-size: 14px;
+      opacity: 0;
+      transition: all 0.5s;
+    }
+    input:focus + .input-focus-label { 
+      opacity: 1;
+      transition: all 1s;
+    }
   }
 }
