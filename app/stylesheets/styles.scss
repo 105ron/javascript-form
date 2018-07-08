@@ -4,6 +4,7 @@ $grey:	#9f9f9f;
 $intermediate-grey: #CECECE;
 $light-grey: #F0F0F0;
 $black: #000;
+$light-green: #C5DFBC;
 
 html {
   box-sizing: border-box;
@@ -191,11 +192,11 @@ Help-slider
 /* ****************************************
 Registration
 **************************************** */
+.heading {
+  font-size: 20px;
+  margin-bottom: 0px;
+}
 .registration {
-  .heading {
-    font-size: 20px;
-    margin-bottom: 0px;
-  }
   .form {
     display: flex;
   }
@@ -353,6 +354,59 @@ Registration
       .submit {
         background-color: $bright-green;
         color: white;
+      }
+    }
+  }
+}
+
+/* ****************************************
+Users table
+**************************************** */
+.users-table {
+  margin-top: 70px;
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  .table .row {
+    display: flex;
+    width: 100%;
+  }
+  .row {
+    &:nth-child(2n + 1) {
+      background-color: $light-grey;
+    }
+    &:hover {
+      background-color: $light-green;
+      cursor: pointer;
+    }
+    .header {
+      background-color: $bright-green;
+      border-bottom: 1px solid $black;
+      li {
+        padding: 15px 0;
+        color: white;
+        font-size: 12px;
+      }
+    }
+    .row-container {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      padding: 0 10px;
+      font-size: 12px;
+      li {
+        padding: 10px 0;
+        flex-basis: 16%;
+        &:nth-child(2) {
+          flex-basis: 19%;
+        }
+        &:nth-child(3) {
+        flex-basis: 9%;
+        }
+        &:nth-child(7) {
+          flex-basis: 4%;
+        }
       }
     }
   }

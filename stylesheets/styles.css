@@ -154,7 +154,7 @@ Help-slider
 /* ****************************************
 Registration
 **************************************** */
-.registration .heading {
+.heading {
   font-size: 20px;
   margin-bottom: 0px; }
 
@@ -275,3 +275,42 @@ Registration
     .registration .card .form-button .submit {
       background-color: #34A00F;
       color: white; }
+
+/* ****************************************
+Users table
+**************************************** */
+.users-table {
+  margin-top: 70px; }
+  .users-table ul {
+    list-style: none;
+    padding: 0; }
+  .users-table .table .row {
+    display: flex;
+    width: 100%; }
+  .users-table .row:nth-child(2n + 1) {
+    background-color: #F0F0F0; }
+  .users-table .row:hover {
+    background-color: #C5DFBC;
+    cursor: pointer; }
+  .users-table .row .header {
+    background-color: #34A00F;
+    border-bottom: 1px solid #000; }
+    .users-table .row .header li {
+      padding: 15px 0;
+      color: white;
+      font-size: 12px; }
+  .users-table .row .row-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 10px;
+    font-size: 12px; }
+    .users-table .row .row-container li {
+      padding: 10px 0;
+      flex-basis: 16%; }
+      .users-table .row .row-container li:nth-child(2) {
+        flex-basis: 19%; }
+      .users-table .row .row-container li:nth-child(3) {
+        flex-basis: 9%; }
+      .users-table .row .row-container li:nth-child(7) {
+        flex-basis: 4%; }

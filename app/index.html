@@ -106,15 +106,15 @@
         <div class="card right">
           <p class="forms-heading">Ride in group?</p>
           <div class="radio-container">
-            <input type="radio" name="frequency" value="Always" id="always">
+            <input type="radio" name="group" value="Always" id="always">
             <label for="always" class="frequency">
               <span>Always</span>
             </label>
-            <input type="radio" name="frequency" value="Sometimes" id="sometimes">
+            <input type="radio" name="group" value="Sometimes" id="sometimes">
             <label for="sometimes" class="frequency">
               <span>Sometimes</span>
             </label>
-            <input type="radio" name="frequency" value="Never" id="never">
+            <input type="radio" name="group" value="Never" id="never">
             <label for="never" class="frequency">
               <span>Never</span>
             </label>
@@ -156,6 +156,22 @@
           </div>
         </div>
       </form>
+    </div>
+    <div class="users-table container">
+      <h2 class="heading">Users</h2>
+      <ul class="table" id="table">
+        <li class="row">
+          <ul class="row-container header">
+            <li>Full Name</li>
+            <li>Email</li>
+            <li>City</li>
+            <li>Ride in Group</li>
+            <li>Days of the Week</li>
+            <li>Registration day</li>
+            <li></li>
+          </ul>
+        </li>
+      </ul>
     </div>
     <script src="scripts/app.js"></script>
   </body>
