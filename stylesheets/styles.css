@@ -262,5 +262,16 @@ Registration
       border: 1px solid #34A00F; }
     .registration .card .checkbox-container input[type="checkbox"]:checked + .days > span:after {
       content: '✓'; }
-  .registration .card .lastelement {
-    margin-top: auto; }
+  .registration .card .form-button {
+    margin-top: auto;
+    text-align: right; }
+    .registration .card .form-button .cancel, .registration .card .form-button .submit {
+      padding: 5px 12px;
+      border: none;
+      border-radius: 3px;
+      font-weight: bold; }
+    .registration .card .form-button .cancel {
+      background-color: #F0F0F0; }
+    .registration .card .form-button .submit {
+      background-color: #34A00F;
+      color: white; }

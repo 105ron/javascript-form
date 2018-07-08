@@ -309,7 +309,6 @@ Registration
         background-color: black;
       }
     }
-    
     .checkbox {
       margin: 30px 0 6px 0;
     }
@@ -339,10 +338,22 @@ Registration
         }
       }
     }
-
-
-    .lastelement {
+    .form-button {
       margin-top: auto;
+      text-align: right;
+      .cancel, .submit {
+        padding: 5px 12px;
+        border: none;
+        border-radius: 3px;
+        font-weight: bold;
+      }
+      .cancel {
+        background-color: $light-grey;
+      }
+      .submit {
+        background-color: $bright-green;
+        color: white;
+      }
     }
   }
 }

@@ -2,6 +2,7 @@
 
 var closeButton = document.getElementById("helpButton");
 var slider = document.getElementById("slideElement");
+var form = document.getElementById("cycleForm");
 
 closeButton.addEventListener("click", function () {
   if (slider.classList.contains("active")) {
@@ -17,4 +18,13 @@ slider.addEventListener("transitionend", function () {
   } else {
     closeButton.innerText = "Open ↓";
   }
+});
+
+form.addEventListener('submit', function (e) {
+  var record = { days: [] };
+  var formData = new FormData(form);
+  e.preventDefault();
+  formData.forEach(function (data, key) {
+    return key === 'days' ? record.days.push([data]) : record[key] = data;
+  });
 });
