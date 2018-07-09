@@ -301,6 +301,8 @@ Users table
   .users-table .row .header {
     background-color: #34A00F;
     border-bottom: 1px solid #000; }
+    .users-table .row .header:hover {
+      cursor: auto; }
     .users-table .row .header li {
       padding: 15px 0;
       color: white;
@@ -321,3 +323,5 @@ Users table
       .users-table .row .row-container li:nth-child(7) {
         text-align: center;
         flex-basis: 2%; }
+      .users-table .row .row-container li .time {
+        color: #9f9f9f; }

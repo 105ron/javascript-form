@@ -1,11 +1,10 @@
 "use strict";
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 var closeButton = document.getElementById("helpButton");
 var slider = document.getElementById("slideElement");
 var form = document.getElementById("cycleForm");
 var table = document.getElementById("table");
+var cancelButton = document.getElementById("cancel");
 
 closeButton.addEventListener("click", function () {
   if (slider.classList.contains("active")) {
@@ -86,7 +85,7 @@ var users = [{
 }];
 
 function createUserRow(user) {
-  return "<li class='row'>\n    <ul class='row-container'>\n    <li>" + user.name + "</li>\n    <li>" + user.email + "</li>\n    <li>" + user.city + "</li>\n    <li>" + user.group + "</li>\n    <li>" + user.days + "</li>\n    <li>\n    <span class='date'>" + user.registration.date + "</span>\n    <span class='time'>" + user.registration.time + "</span>\n    </li>\n    <li class='trash' data-identifier='" + user.email + "'>\n      <i class='fas fa-trash-alt'></i>\n    </li>\n    </ul>\n    </li>";
+  return "<li class='row'>\n    <ul class='row-container'>\n    <li>" + user.name + "</li>\n    <li>" + user.email + "</li>\n    <li>" + user.city + "</li>\n    <li>" + user.group + "</li>\n    <li>" + user.days + "</li>\n    <li>\n    <span>" + user.registration.date + "</span>\n    <span class='time'>" + user.registration.time + "</span>\n    </li>\n    <li class='trash' id='" + user.email + "'>\n      <i class='fas fa-trash-alt'></i>\n    </li>\n    </ul>\n    </li>";
 }
 
 function insertUserInTable(users) {
@@ -97,27 +96,19 @@ function insertUserInTable(users) {
 }
 
 function deleteRow(e) {
-  console.log(e.target);
+  e.target.parentNode.parentNode.parentNode.removeChild(e.target.parentNode.parentNode);
 }
 
 function createUserListener(users) {
-  var _ref;
-
-  var table = document.getElementById("table");
   var trashList = users.map(function (user) {
-    return [].concat(_toConsumableArray(table.querySelectorAll("[data-identifier=\"" + user.email + "\"]")));
+    return document.getElementById(user.email);
   });
-  var trashArray = (_ref = []).concat.apply(_ref, _toConsumableArray(trashList));
-  console.log(trashArray);
-  trashArray.forEach(function (trashCan) {
+  trashList.forEach(function (trashCan) {
     return trashCan.addEventListener('click', deleteRow);
   });
 }
 
-insertUserInTable(users);
-createUserListener(users);
-
-function getDate() {
+function getFormattedDate() {
   var period = void 0;
   var dateNow = new Date();
   var year = dateNow.getFullYear();
@@ -139,7 +130,7 @@ function getDate() {
 
 form.addEventListener("submit", function (e) {
   var formData = new FormData(form);
-  var registration = getDate();
+  var registration = getFormattedDate();
   var record = {
     'days': [],
     registration: registration,
@@ -151,4 +142,13 @@ form.addEventListener("submit", function (e) {
   });
   insertUserInTable([record]);
   createUserListener([record]);
+  e.target.reset();
 });
+
+cancelButton.addEventListener("click", function (e) {
+  e.preventDefault();
+  form.reset();
+});
+
+insertUserInTable(users);
+createUserListener(users);

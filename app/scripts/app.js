@@ -2,6 +2,7 @@ const closeButton = document.getElementById("helpButton");
 const slider = document.getElementById("slideElement");
 const form = document.getElementById("cycleForm");
 const table = document.getElementById("table");
+const cancelButton = document.getElementById("cancel");
 
 closeButton.addEventListener("click", function() {
   if (slider.classList.contains("active")) {
@@ -99,10 +100,10 @@ function createUserRow(user) {
     <li>${user.group}</li>
     <li>${user.days}</li>
     <li>
-    <span class='date'>${user.registration.date}</span>
+    <span>${user.registration.date}</span>
     <span class='time'>${user.registration.time}</span>
     </li>
-    <li class='trash' data-identifier='${user.email}'>
+    <li class='trash' id='${user.email}'>
       <i class='fas fa-trash-alt'></i>
     </li>
     </ul>
@@ -118,26 +119,22 @@ function insertUserInTable (users) {
 }
 
 function deleteRow(e) {
-  console.log(e.target);
+  e.target.parentNode.parentNode.parentNode.
+  removeChild(e.target.parentNode.parentNode)
 }
 
 function createUserListener(users) {
-  const table = document.getElementById("table");
   const trashList = users.map(user=>
-    [...table.querySelectorAll(`[data-identifier="${user.email}"]`)]
+    document.getElementById(user.email)
   );
-  const trashArray = [].concat(...trashList);
-  console.log(trashArray);
-  trashArray.forEach(trashCan =>
+  trashList.forEach(trashCan =>
     trashCan.addEventListener('click', deleteRow)
   );
 }
 
-insertUserInTable(users);
-createUserListener(users)
 
 
-function getDate() {
+function getFormattedDate() {
   let period;
   const dateNow = new Date();
   const year = dateNow.getFullYear();
@@ -159,7 +156,7 @@ function getDate() {
 
 form.addEventListener("submit", function(e) {
   const formData = new FormData(form);
-  const registration = getDate();
+  const registration = getFormattedDate();
   const record = {
     'days': [],
     registration,
@@ -167,8 +164,17 @@ form.addEventListener("submit", function(e) {
   };
   e.preventDefault();
   formData.forEach((data, key) =>
-      key === "days" ? record.days.push([data]) : (record[key] = data)
+    key === "days" ? record.days.push([data]) : (record[key] = data)
   );
   insertUserInTable([record]);
   createUserListener([record]);
+  e.target.reset();
 });
+
+cancelButton.addEventListener("click", (e)=> {
+  e.preventDefault();
+  form.reset();
+});
+
+insertUserInTable(users);
+createUserListener(users);

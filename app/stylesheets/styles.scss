@@ -391,6 +391,9 @@ Users table
     .header {
       background-color: $bright-green;
       border-bottom: 1px solid $black;
+      &:hover {
+        cursor: auto;
+      }
       li {
         padding: 15px 0;
         color: white;
@@ -415,6 +418,9 @@ Users table
         &:nth-child(7) {
           text-align: center;
           flex-basis: 2%;
+        }
+        .time {
+          color: $grey;
         }
       }
     }
