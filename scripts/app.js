@@ -1,7 +1,7 @@
 "use strict";
 
 (function () {
-  Number.prototype.formatTime = function () {
+  Number.prototype.formatDateTime = function () {
     //add leading 0 to date and time when number < 10
     return this.toString().padStart(2, "0");
   };
@@ -91,16 +91,12 @@
   }
 
   function getFormattedDate() {
-    //Find the time and format it correctly
-    var formatCharacters = function formatCharacters(x) {
-      return x.toString().padStart(2, "0");
-    };
     var period = void 0;
     var dateNow = new Date();
     var year = dateNow.getFullYear();
-    var month = (dateNow.getMonth() + 1).formatTime();
-    var day = dateNow.getDate().formatTime();
-    var minutes = dateNow.getMinutes().formatTime();
+    var month = (dateNow.getMonth() + 1).formatDateTime();
+    var day = dateNow.getDate().formatDateTime();
+    var minutes = dateNow.getMinutes().formatDateTime();
     var hours = dateNow.getHours();
     //convert 24 hour time to AM/PM
     if (hours < 13) {
@@ -109,7 +105,7 @@
       period = "PM";
       hours -= 12;
     }
-    hours = hours.formatTime();;
+    hours = hours.formatDateTime();
     var date = day + "/" + month + "/" + year;
     var time = hours + ":" + minutes + period;
     return { date: date, time: time };
@@ -121,7 +117,7 @@
       result: "Every day"
     }, {
       regex: /^M.{21}i, /,
-      result: "Weeks Days"
+      result: "Week Days"
     }, {
       regex: /^S.{6}t, /,
       result: "Weekends"
@@ -165,7 +161,7 @@
   }
 
   /* ****************************************
-  IIF
+  Add users to table
   **************************************** */
 
   insertUserInTable(users);
@@ -201,7 +197,7 @@
     });
     record.days = getformattedDays(days); //convert days to weekend/weekdays string
     if (invalidNameOrEmail(record.email, record.name)) {
-      return;
+      return; //Don't let function finish if email or username isn't entered correctly
     } else {
       insertUserInTable([record]);
       e.target.reset(); //reset form fields

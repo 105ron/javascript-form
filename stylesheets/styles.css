@@ -238,8 +238,7 @@ Registration
         top: 5px;
         width: 6px;
         height: 6px;
-        border-radius: 10px;
-        background-color: none; }
+        border-radius: 10px; }
   .registration .card input[type="radio"]:checked + .frequency > span:before {
     border: 1px solid #34A00F; }
   .registration .card input[type="radio"]:checked + .frequency > span:after {
@@ -311,6 +310,7 @@ Users table
     display: flex;
     width: 100%;
     justify-content: space-between;
+    align-items: center;
     padding: 0 10px;
     font-size: 12px; }
     .users-table .row .row-container li {

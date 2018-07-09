@@ -1,8 +1,8 @@
 (function() {
-  Number.prototype.formatTime = function () {
+  Number.prototype.formatDateTime = function() {
     //add leading 0 to date and time when number < 10
     return this.toString().padStart(2, "0");
-  }
+  };
   const closeButton = document.getElementById("helpButton");
   const slider = document.getElementById("slideElement");
   const form = document.getElementById("cycleForm");
@@ -111,18 +111,12 @@
   }
 
   function getFormattedDate() {
-    //Find the time and format it correctly
-    const formatCharacters = (x) => x.toString().padStart(2, "0");
     let period;
     const dateNow = new Date();
     const year = dateNow.getFullYear();
-    const month = (dateNow.getMonth() + 1).formatTime();
-    const day = dateNow
-      .getDate()
-      .formatTime();
-    const minutes = dateNow
-      .getMinutes()
-      .formatTime();
+    const month = (dateNow.getMonth() + 1).formatDateTime();
+    const day = dateNow.getDate().formatDateTime();
+    const minutes = dateNow.getMinutes().formatDateTime();
     let hours = dateNow.getHours();
     //convert 24 hour time to AM/PM
     if (hours < 13) {
@@ -131,7 +125,7 @@
       period = "PM";
       hours -= 12;
     }
-    hours = hours.formatTime();;
+    hours = hours.formatDateTime();
     const date = `${day}/${month}/${year}`;
     const time = `${hours}:${minutes}${period}`;
     return { date, time };
@@ -145,7 +139,7 @@
       },
       {
         regex: /^M.{21}i, /,
-        result: "Weeks Days"
+        result: "Week Days"
       },
       {
         regex: /^S.{6}t, /,
@@ -193,7 +187,7 @@
   }
 
   /* ****************************************
-  IIF
+  Add users to table
   **************************************** */
 
   insertUserInTable(users);
@@ -202,7 +196,7 @@
   Listeners
   **************************************** */
 
-  cancelButton.addEventListener("click", e => {
+  cancelButton.addEventListener("click", function (e) {
     const form = document.getElementById("cycleForm");
     e.preventDefault();
     form.reset();
@@ -229,7 +223,7 @@
     });
     record.days = getformattedDays(days); //convert days to weekend/weekdays string
     if (invalidNameOrEmail(record.email, record.name)) {
-      return;
+      return;//Don't let function finish if email or username isn't entered correctly
     } else {
       insertUserInTable([record]);
       e.target.reset(); //reset form fields

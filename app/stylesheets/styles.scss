@@ -298,7 +298,6 @@ Registration
           width: 6px;
           height: 6px;
           border-radius: 10px;
-          background-color: none;
         }
       }
     }
@@ -404,6 +403,7 @@ Users table
       display: flex;
       width: 100%;
       justify-content: space-between;
+      align-items: center;
       padding: 0 10px;
       font-size: 12px;
       li {
