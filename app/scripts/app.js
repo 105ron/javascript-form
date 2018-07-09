@@ -169,12 +169,28 @@ function insertUserInTable (users) {
   createUserListener(users);
 }
 
+function invalidNameOrEmail(email, name) {
+  let alertPhrase = ''
+  console.log({email, name}, 'here');
+  if (email && document.getElementById(email)) { //only check if email is entered
+    console.log('email found');
+    alertPhrase = 'Email must be unique';
+  };
+  if (email.length < 6 || name.length < 2) {
+    alertPhrase = `Please enter a name of 3 characters or more and email of 7 characters or more`;
+  }
+  if (alertPhrase) {
+    alert(alertPhrase)
+    return true;
+  }
+  return false;
+}
+
 /* ****************************************
 IIF
 **************************************** */
 
 insertUserInTable(users);
-
 
 /* ****************************************
 Listeners
@@ -196,18 +212,22 @@ closeButton.addEventListener("click", function() {
 });
 
 form.addEventListener("submit", function(e) {
+  e.preventDefault();
   const form = document.getElementById("cycleForm");
   const formData = new FormData(form);
-  let days = ''
-  const registration = getFormattedDate();
-  const record = {registration, city: ''};
-  e.preventDefault();
-  formData.forEach((data, key) =>
+  let days = '';
+  const registration = getFormattedDate(); //get registration date/time object
+  const record = {registration, city: '', name: '', email: ''}; 
+  formData.forEach(function (data, key) {
     key === "days" ? days += `${data}, ` : (record[key] = data)
-  );
-  record.days = getformattedDays(days);
-  insertUserInTable([record]);
-  e.target.reset();
+  });
+  record.days = getformattedDays(days); //convert days to weekend/weekdays string
+  if (invalidNameOrEmail(record.email, record.name)) {
+    return;
+  } else {
+    insertUserInTable([record]);
+    e.target.reset(); //reset form fields
+  }
 });
 
 slider.addEventListener("transitionend", function() {

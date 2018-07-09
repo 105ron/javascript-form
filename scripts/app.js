@@ -140,6 +140,24 @@ function insertUserInTable(users) {
   createUserListener(users);
 }
 
+function invalidNameOrEmail(email, name) {
+  var alertPhrase = '';
+  console.log({ email: email, name: name }, 'here');
+  if (email && document.getElementById(email)) {
+    //only check if email is entered
+    console.log('email found');
+    alertPhrase = 'Email must be unique';
+  };
+  if (email.length < 6 || name.length < 2) {
+    alertPhrase = "Please enter a name of 3 characters or more and email of 7 characters or more";
+  }
+  if (alertPhrase) {
+    alert(alertPhrase);
+    return true;
+  }
+  return false;
+}
+
 /* ****************************************
 IIF
 **************************************** */
@@ -166,18 +184,22 @@ closeButton.addEventListener("click", function () {
 });
 
 form.addEventListener("submit", function (e) {
+  e.preventDefault();
   var form = document.getElementById("cycleForm");
   var formData = new FormData(form);
   var days = '';
-  var registration = getFormattedDate();
-  var record = { registration: registration, city: '' };
-  e.preventDefault();
+  var registration = getFormattedDate(); //get registration date/time object
+  var record = { registration: registration, city: '', name: '', email: '' };
   formData.forEach(function (data, key) {
-    return key === "days" ? days += data + ", " : record[key] = data;
+    key === "days" ? days += data + ", " : record[key] = data;
   });
-  record.days = getformattedDays(days);
-  insertUserInTable([record]);
-  e.target.reset();
+  record.days = getformattedDays(days); //convert days to weekend/weekdays string
+  if (invalidNameOrEmail(record.email, record.name)) {
+    return;
+  } else {
+    insertUserInTable([record]);
+    e.target.reset(); //reset form fields
+  }
 });
 
 slider.addEventListener("transitionend", function () {

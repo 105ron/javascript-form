@@ -163,13 +163,13 @@ Registration
 
 .registration .card + .card {
   margin-left: 60px;
-  flex: 17;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap; }
 
 .registration .card {
-  flex: 11; }
+  flex-grow: 1;
+  min-width: 330px; }
   .registration .card .text-label {
     position: relative;
     display: block;
@@ -219,7 +219,7 @@ Registration
     margin-right: 8px; }
     .registration .card .frequency > span, .registration .card .days > span {
       cursor: pointer;
-      margin: 0 35px 0 8px; }
+      margin: 0 22px 0 8px; }
       .registration .card .frequency > span:hover:before, .registration .card .days > span:hover:before {
         border: 1px solid #34A00F; }
       .registration .card .frequency > span:before, .registration .card .frequency > span:after, .registration .card .days > span:before, .registration .card .days > span:after {
@@ -325,3 +325,15 @@ Users table
         flex-basis: 2%; }
       .users-table .row .row-container li .time {
         color: #9f9f9f; }
+
+/* ****************************************
+Bottom information
+**************************************** */
+.bottom-information {
+  margin: 70px 0;
+  padding: 8px 0;
+  border-top: 1px solid black;
+  font-size: 12px;
+  color: #CECECE; }
+  .bottom-information .right {
+    float: right; }
