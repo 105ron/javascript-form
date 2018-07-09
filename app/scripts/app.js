@@ -3,24 +3,6 @@ const slider = document.getElementById("slideElement");
 const form = document.getElementById("cycleForm");
 const table = document.getElementById("table");
 const cancelButton = document.getElementById("cancel");
-
-closeButton.addEventListener("click", function() {
-  if (slider.classList.contains("active")) {
-    slider.classList.remove("active");
-  } else {
-    slider.classList.add("active");
-  }
-});
-
-slider.addEventListener("transitionend", function() {
-  if (slider.classList.contains("active")) {
-    closeButton.innerText = "Close ↑";
-  } else {
-    closeButton.innerText = "Open ↓";
-  }
-});
-
-
 const users = [
   {
     'city': 'City',
@@ -104,32 +86,48 @@ function createUserRow(user) {
     <span class='time'>${user.registration.time}</span>
     </li>
     <li class='trash' id='${user.email}'>
-      <i class='fas fa-trash-alt'></i>
+    <i class='fas fa-trash-alt'></i>
     </li>
     </ul>
     </li>`
   )
 }
 
-function insertUserInTable (users) {
-  const userTable = users.map(function (userData) {
-    return createUserRow(userData)
-  });
-  table.insertAdjacentHTML('beforeend', userTable.join(''))
-}
-
 function deleteRow(e) {
+  //traverse dom from trash can to delete it parent li.row
   e.target.parentNode.parentNode.parentNode.
-  removeChild(e.target.parentNode.parentNode)
+  removeChild(e.target.parentNode.parentNode);
 }
-
 function createUserListener(users) {
+  //Given an array of users objects, find the trash icon by email and attach click event
   const trashList = users.map(user=>
     document.getElementById(user.email)
   );
   trashList.forEach(trashCan =>
     trashCan.addEventListener('click', deleteRow)
   );
+}
+
+function getFormattedDate() {
+  //Find the time and format it correctly
+  let period;
+  const dateNow = new Date();
+  const year = dateNow.getFullYear();
+  const month = (dateNow.getMonth() + 1).toString().padStart(2, '0');
+  const day = dateNow.getDate().toString().padStart(2, '0');
+  const minutes = dateNow.getMinutes().toString().padStart(2, '0');
+  let hours = dateNow.getHours();
+  //convert 24 hour time to AM/PM
+  if (hours < 13) {
+    period = 'AM';
+  } else {
+    period = 'PM';
+    hours -=12;
+  }
+  hours = hours.toString().padStart(2, '0')
+  const date = `${day}/${month}/${year}`
+  const time = `${hours}:${minutes}${period}`;
+  return {date, time};
 }
 
 function getformattedDays(days) {
@@ -148,40 +146,57 @@ function getformattedDays(days) {
     },
     {
       regex: /, $/, 
-      result: ""
+      result: "" //Cleans trailing comma for any other cases
     },
     {
       regex: /^/, 
-      result: "None"
+      result: "None" //User checked no boxes
     }
-  ]  
-  const correctRegex = regexDictionary.find( dictionary =>  
-    dictionary.regex.test(days)
-  );    
-  return  days.replace(correctRegex.regex, correctRegex.result); //No check boxes
+  ]
+  //Iterate array to find the correct regex and use it to send the formatted day
+  const correctRegex = regexDictionary.find(function (dictionary) {
+    return dictionary.regex.test(days)
+  });
+  return  days.replace(correctRegex.regex, correctRegex.result);
 }
 
-function getFormattedDate() {
-  let period;
-  const dateNow = new Date();
-  const year = dateNow.getFullYear();
-  const month = (dateNow.getMonth() + 1).toString().padStart(2, '0');
-  const day = dateNow.getDate().toString().padStart(2, '0');
-  const minutes = dateNow.getMinutes().toString().padStart(2, '0');
-  let hours = dateNow.getHours();
-  if (hours < 13) {
-    period = 'AM';
-  } else {
-    period = 'PM';
-    hours -=12;
-  }
-  hours = hours.toString().padStart(2, '0')
-  const date = `${day}/${month}/${year}`
-  const time = `${hours}:${minutes}${period}`;
-  return {date, time};
+function insertUserInTable (users) {
+  //convert array of users objects into array html, join and insert into table
+  const userTable = users.map(function (userData) {
+    return createUserRow(userData)
+  });
+  table.insertAdjacentHTML('beforeend', userTable.join(''))
+  createUserListener(users);
 }
+
+/* ****************************************
+IIF
+**************************************** */
+
+insertUserInTable(users);
+
+
+/* ****************************************
+Listeners
+**************************************** */
+
+cancelButton.addEventListener("click", (e)=> {
+  const form = document.getElementById("cycleForm");
+  e.preventDefault();
+  form.reset();
+});
+
+closeButton.addEventListener("click", function() {
+  //Make the help button interactive
+  if (slider.classList.contains("active")) {
+    slider.classList.remove("active");
+  } else {
+    slider.classList.add("active");
+  }
+});
 
 form.addEventListener("submit", function(e) {
+  const form = document.getElementById("cycleForm");
   const formData = new FormData(form);
   let days = ''
   const registration = getFormattedDate();
@@ -192,15 +207,14 @@ form.addEventListener("submit", function(e) {
   );
   record.days = getformattedDays(days);
   insertUserInTable([record]);
-  createUserListener([record]);
-  //e.target.reset();
+  e.target.reset();
 });
 
-cancelButton.addEventListener("click", (e)=> {
-  const form = document.getElementById("cycleForm");
-  e.preventDefault();
-  form.reset();
+slider.addEventListener("transitionend", function() {
+  //change the help button label after the animation has finished sliding
+  if (slider.classList.contains("active")) {
+    closeButton.innerText = "Close ↑";
+  } else {
+    closeButton.innerText = "Open ↓";
+  }
 });
-
-insertUserInTable(users);
-createUserListener(users);

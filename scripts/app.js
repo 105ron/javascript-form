@@ -5,23 +5,6 @@ var slider = document.getElementById("slideElement");
 var form = document.getElementById("cycleForm");
 var table = document.getElementById("table");
 var cancelButton = document.getElementById("cancel");
-
-closeButton.addEventListener("click", function () {
-  if (slider.classList.contains("active")) {
-    slider.classList.remove("active");
-  } else {
-    slider.classList.add("active");
-  }
-});
-
-slider.addEventListener("transitionend", function () {
-  if (slider.classList.contains("active")) {
-    closeButton.innerText = "Close ↑";
-  } else {
-    closeButton.innerText = "Open ↓";
-  }
-});
-
 var users = [{
   'city': 'City',
   'days': 'Every day',
@@ -85,27 +68,43 @@ var users = [{
 }];
 
 function createUserRow(user) {
-  return "<li class='row'>\n    <ul class='row-container'>\n    <li>" + user.name + "</li>\n    <li>" + user.email + "</li>\n    <li>" + user.city + "</li>\n    <li>" + user.group + "</li>\n    <li>" + user.days + "</li>\n    <li>\n    <span>" + user.registration.date + "</span>\n    <span class='time'>" + user.registration.time + "</span>\n    </li>\n    <li class='trash' id='" + user.email + "'>\n      <i class='fas fa-trash-alt'></i>\n    </li>\n    </ul>\n    </li>";
-}
-
-function insertUserInTable(users) {
-  var userTable = users.map(function (userData) {
-    return createUserRow(userData);
-  });
-  table.insertAdjacentHTML('beforeend', userTable.join(''));
+  return "<li class='row'>\n    <ul class='row-container'>\n    <li>" + user.name + "</li>\n    <li>" + user.email + "</li>\n    <li>" + user.city + "</li>\n    <li>" + user.group + "</li>\n    <li>" + user.days + "</li>\n    <li>\n    <span>" + user.registration.date + "</span>\n    <span class='time'>" + user.registration.time + "</span>\n    </li>\n    <li class='trash' id='" + user.email + "'>\n    <i class='fas fa-trash-alt'></i>\n    </li>\n    </ul>\n    </li>";
 }
 
 function deleteRow(e) {
+  //traverse dom from trash can to delete it parent li.row
   e.target.parentNode.parentNode.parentNode.removeChild(e.target.parentNode.parentNode);
 }
-
 function createUserListener(users) {
+  //Given an array of users objects, find the trash icon by email and attach click event
   var trashList = users.map(function (user) {
     return document.getElementById(user.email);
   });
   trashList.forEach(function (trashCan) {
     return trashCan.addEventListener('click', deleteRow);
   });
+}
+
+function getFormattedDate() {
+  //Find the time and format it correctly
+  var period = void 0;
+  var dateNow = new Date();
+  var year = dateNow.getFullYear();
+  var month = (dateNow.getMonth() + 1).toString().padStart(2, '0');
+  var day = dateNow.getDate().toString().padStart(2, '0');
+  var minutes = dateNow.getMinutes().toString().padStart(2, '0');
+  var hours = dateNow.getHours();
+  //convert 24 hour time to AM/PM
+  if (hours < 13) {
+    period = 'AM';
+  } else {
+    period = 'PM';
+    hours -= 12;
+  }
+  hours = hours.toString().padStart(2, '0');
+  var date = day + "/" + month + "/" + year;
+  var time = hours + ":" + minutes + period;
+  return { date: date, time: time };
 }
 
 function getformattedDays(days) {
@@ -120,38 +119,54 @@ function getformattedDays(days) {
     result: "Weekends"
   }, {
     regex: /, $/,
-    result: ""
+    result: "" //Cleans trailing comma for any other cases
   }, {
     regex: /^/,
-    result: "None"
+    result: "None" //User checked no boxes
   }];
+  //Iterate array to find the correct regex and use it to send the formatted day
   var correctRegex = regexDictionary.find(function (dictionary) {
     return dictionary.regex.test(days);
   });
-  return days.replace(correctRegex.regex, correctRegex.result); //No check boxes
+  return days.replace(correctRegex.regex, correctRegex.result);
 }
 
-function getFormattedDate() {
-  var period = void 0;
-  var dateNow = new Date();
-  var year = dateNow.getFullYear();
-  var month = (dateNow.getMonth() + 1).toString().padStart(2, '0');
-  var day = dateNow.getDate().toString().padStart(2, '0');
-  var minutes = dateNow.getMinutes().toString().padStart(2, '0');
-  var hours = dateNow.getHours();
-  if (hours < 13) {
-    period = 'AM';
-  } else {
-    period = 'PM';
-    hours -= 12;
-  }
-  hours = hours.toString().padStart(2, '0');
-  var date = day + "/" + month + "/" + year;
-  var time = hours + ":" + minutes + period;
-  return { date: date, time: time };
+function insertUserInTable(users) {
+  //convert array of users objects into array html, join and insert into table
+  var userTable = users.map(function (userData) {
+    return createUserRow(userData);
+  });
+  table.insertAdjacentHTML('beforeend', userTable.join(''));
+  createUserListener(users);
 }
+
+/* ****************************************
+IIF
+**************************************** */
+
+insertUserInTable(users);
+
+/* ****************************************
+Listeners
+**************************************** */
+
+cancelButton.addEventListener("click", function (e) {
+  var form = document.getElementById("cycleForm");
+  e.preventDefault();
+  form.reset();
+});
+
+closeButton.addEventListener("click", function () {
+  //Make the help button interactive
+  if (slider.classList.contains("active")) {
+    slider.classList.remove("active");
+  } else {
+    slider.classList.add("active");
+  }
+});
 
 form.addEventListener("submit", function (e) {
+  var form = document.getElementById("cycleForm");
   var formData = new FormData(form);
   var days = '';
   var registration = getFormattedDate();
@@ -162,15 +177,14 @@ form.addEventListener("submit", function (e) {
   });
   record.days = getformattedDays(days);
   insertUserInTable([record]);
-  createUserListener([record]);
-  //e.target.reset();
+  e.target.reset();
 });
 
-cancelButton.addEventListener("click", function (e) {
-  var form = document.getElementById("cycleForm");
-  e.preventDefault();
-  form.reset();
+slider.addEventListener("transitionend", function () {
+  //change the help button label after the animation has finished sliding
+  if (slider.classList.contains("active")) {
+    closeButton.innerText = "Close ↑";
+  } else {
+    closeButton.innerText = "Open ↓";
+  }
 });
-
-insertUserInTable(users);
-createUserListener(users);
