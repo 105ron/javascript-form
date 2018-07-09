@@ -1,8 +1,4 @@
 (function() {
-  Number.prototype.formatDateTime = function() {
-    //add leading 0 to date and time when number < 10
-    return this.toString().padStart(2, "0");
-  };
   const closeButton = document.getElementById("helpButton");
   const slider = document.getElementById("slideElement");
   const form = document.getElementById("cycleForm");
@@ -97,35 +93,39 @@
   }
 
   function deleteRow(e) {
-    //traverse dom from trash can to delete it parent li.row
+    // Traverse dom from trash can to delete it parent li.row
     e.target.parentNode.parentNode.parentNode.removeChild(
       e.target.parentNode.parentNode
     );
   }
   function createUserListener(users) {
-    //Given an array of users objects, find the trash icon by email and attach click event
+    // Given an array of users objects, find the trash icon by email and attach click event
     const trashList = users.map(user => document.getElementById(user.email));
     trashList.forEach(trashCan =>
       trashCan.addEventListener("click", deleteRow)
     );
   }
 
+  function formatDateTime (number) {
+    return number.toString().padStart(2, "0");
+  }
+
   function getFormattedDate() {
     let period;
     const dateNow = new Date();
     const year = dateNow.getFullYear();
-    const month = (dateNow.getMonth() + 1).formatDateTime();
-    const day = dateNow.getDate().formatDateTime();
-    const minutes = dateNow.getMinutes().formatDateTime();
+    const month = formatDateTime((dateNow.getMonth() + 1));
+    const day = formatDateTime(dateNow.getDate());
+    const minutes = formatDateTime(dateNow.getMinutes());
     let hours = dateNow.getHours();
-    //convert 24 hour time to AM/PM
+    // Convert 24 hour time to AM/PM
     if (hours < 13) {
       period = "AM";
     } else {
       period = "PM";
       hours -= 12;
     }
-    hours = hours.formatDateTime();
+    hours = formatDateTime(hours);
     const date = `${day}/${month}/${year}`;
     const time = `${hours}:${minutes}${period}`;
     return { date, time };
@@ -147,14 +147,14 @@
       },
       {
         regex: /, $/,
-        result: "" //Cleans trailing comma for any other cases
+        result: "" // Cleans trailing comma for any other cases
       },
       {
         regex: /^/,
-        result: "None" //User checked no boxes
+        result: "None" // User checked no boxes
       }
     ];
-    //Iterate array to find the correct regex and use it to send the formatted day
+    // Iterate array to find the correct regex and use it to send the formatted day
     const correctRegex = regexDictionary.find(function(dictionary) {
       return dictionary.regex.test(days);
     });
@@ -162,7 +162,7 @@
   }
 
   function insertUserInTable(users) {
-    //convert array of users objects into array html, join and insert into table
+    // Convert array of users objects into array html, join and insert into table
     const userTable = users.map(function(userData) {
       return createUserRow(userData);
     });
@@ -173,7 +173,7 @@
   function invalidNameOrEmail(email, name) {
     let alertPhrase = "";
     if (email && document.getElementById(email)) {
-      //only check if email is entered
+      // Only check if email is entered
       alertPhrase = "Email must be unique";
     }
     if (email.length < 6 || name.length < 2) {
@@ -203,7 +203,7 @@
   });
 
   closeButton.addEventListener("click", function() {
-    //Make the help button interactive
+    // Make the help button interactive
     if (slider.classList.contains("active")) {
       slider.classList.remove("active");
     } else {
@@ -213,29 +213,29 @@
 
   form.addEventListener("submit", function(e) {
     e.preventDefault();
+    let days = "";
+    const registration = getFormattedDate(); // Get registration date/time object
+    const record = { registration, city: "", name: "", email: "" };
     const form = document.getElementById("cycleForm");
     const formData = new FormData(form);
-    let days = "";
-    const registration = getFormattedDate(); //get registration date/time object
-    const record = { registration, city: "", name: "", email: "" };
     formData.forEach(function(data, key) {
       key === "days" ? (days += `${data}, `) : (record[key] = data);
     });
-    record.days = getformattedDays(days); //convert days to weekend/weekdays string
+    record.days = getformattedDays(days); // Convert days to weekend/weekdays string
     if (invalidNameOrEmail(record.email, record.name)) {
-      return;//Don't let function finish if email or username isn't entered correctly
+      return;// Don't let function finish if email or username isn't entered correctly
     } else {
       insertUserInTable([record]);
-      e.target.reset(); //reset form fields
+      e.target.reset(); // Reset form fields
     }
   });
 
   slider.addEventListener("transitionend", function() {
-    //change the help button label after the animation has finished sliding
+    // Change the help button label after the animation has finished sliding
     if (slider.classList.contains("active")) {
       closeButton.innerText = "Close ↑";
     } else {
       closeButton.innerText = "Open ↓";
     }
   });
-})(); //end IIFE
+}());
