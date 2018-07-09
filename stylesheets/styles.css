@@ -287,11 +287,17 @@ Users table
   .users-table .table .row {
     display: flex;
     width: 100%; }
+  .users-table .row .trash {
+    opacity: 0;
+    transition: opacity 0.2s; }
   .users-table .row:nth-child(2n + 1) {
     background-color: #F0F0F0; }
   .users-table .row:hover {
     background-color: #C5DFBC;
     cursor: pointer; }
+    .users-table .row:hover .trash {
+      opacity: 1;
+      transition: opacity 0.8s; }
   .users-table .row .header {
     background-color: #34A00F;
     border-bottom: 1px solid #000; }
@@ -313,4 +319,5 @@ Users table
       .users-table .row .row-container li:nth-child(3) {
         flex-basis: 9%; }
       .users-table .row .row-container li:nth-child(7) {
-        flex-basis: 4%; }
+        text-align: center;
+        flex-basis: 2%; }

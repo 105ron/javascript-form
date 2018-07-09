@@ -373,12 +373,20 @@ Users table
     width: 100%;
   }
   .row {
+    .trash {
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
     &:nth-child(2n + 1) {
       background-color: $light-grey;
     }
     &:hover {
       background-color: $light-green;
       cursor: pointer;
+      .trash {
+        opacity: 1;
+        transition: opacity 0.8s;
+      }
     }
     .header {
       background-color: $bright-green;
@@ -405,7 +413,8 @@ Users table
         flex-basis: 9%;
         }
         &:nth-child(7) {
-          flex-basis: 4%;
+          text-align: center;
+          flex-basis: 2%;
         }
       }
     }

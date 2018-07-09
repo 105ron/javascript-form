@@ -1,5 +1,7 @@
 "use strict";
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 var closeButton = document.getElementById("helpButton");
 var slider = document.getElementById("slideElement");
 var form = document.getElementById("cycleForm");
@@ -19,15 +21,6 @@ slider.addEventListener("transitionend", function () {
   } else {
     closeButton.innerText = "Open ↓";
   }
-});
-
-form.addEventListener("submit", function (e) {
-  var record = { days: [] };
-  var formData = new FormData(form);
-  e.preventDefault();
-  formData.forEach(function (data, key) {
-    return key === "days" ? record.days.push([data]) : record[key] = data;
-  });
 });
 
 var users = [{
@@ -70,13 +63,92 @@ var users = [{
     'date': '13/08/2018',
     'time': '11:29AM'
   }
+}, {
+  'city': 'City',
+  'days': 'Mon, Tue, Wed',
+  'email': 'folfx2014@example.com',
+  'group': 'Sometimes',
+  'name': 'Libby Folfax',
+  'registration': {
+    'date': '13/08/2018',
+    'time': '11:29AM'
+  }
+}, {
+  'city': 'City',
+  'days': 'Fri, Sat',
+  'email': 'nickd@example.com',
+  'group': 'Always',
+  'name': 'Nick Dean',
+  'registration': {
+    'date': '13/08/2018',
+    'time': '11:29AM'
+  }
 }];
 
 function createUserRow(user) {
-  return "<li class='row'>\n      <ul class='row-container'>\n        <li>" + user.name + "</li>\n        <li>" + user.email + "</li>\n        <li>" + user.city + "</li>\n        <li>" + user.group + "</li>\n        <li>" + user.days + "</li>\n        <li>\n          <span class='date'>" + user.registration.date + "</span>\n          <span class='time'>" + user.registration.time + "</span>\n        </li>\n        <li>T</li>\n      </ul>\n    </li>";
+  return "<li class='row'>\n    <ul class='row-container'>\n    <li>" + user.name + "</li>\n    <li>" + user.email + "</li>\n    <li>" + user.city + "</li>\n    <li>" + user.group + "</li>\n    <li>" + user.days + "</li>\n    <li>\n    <span class='date'>" + user.registration.date + "</span>\n    <span class='time'>" + user.registration.time + "</span>\n    </li>\n    <li class='trash' data-identifier='" + user.email + "'>\n      <i class='fas fa-trash-alt'></i>\n    </li>\n    </ul>\n    </li>";
 }
 
-table.insertAdjacentHTML('beforeend', createUserRow(users[0]));
-table.insertAdjacentHTML('beforeend', createUserRow(users[1]));
-table.insertAdjacentHTML('beforeend', createUserRow(users[2]));
-table.insertAdjacentHTML('beforeend', createUserRow(users[3]));
+function insertUserInTable(users) {
+  var userTable = users.map(function (userData) {
+    return createUserRow(userData);
+  });
+  table.insertAdjacentHTML('beforeend', userTable.join(''));
+}
+
+function deleteRow(e) {
+  console.log(e.target);
+}
+
+function createUserListener(users) {
+  var _ref;
+
+  var table = document.getElementById("table");
+  var trashList = users.map(function (user) {
+    return [].concat(_toConsumableArray(table.querySelectorAll("[data-identifier=\"" + user.email + "\"]")));
+  });
+  var trashArray = (_ref = []).concat.apply(_ref, _toConsumableArray(trashList));
+  console.log(trashArray);
+  trashArray.forEach(function (trashCan) {
+    return trashCan.addEventListener('click', deleteRow);
+  });
+}
+
+insertUserInTable(users);
+createUserListener(users);
+
+function getDate() {
+  var period = void 0;
+  var dateNow = new Date();
+  var year = dateNow.getFullYear();
+  var month = (dateNow.getMonth() + 1).toString().padStart(2, '0');
+  var day = dateNow.getDate().toString().padStart(2, '0');
+  var minutes = dateNow.getMinutes().toString().padStart(2, '0');
+  var hours = dateNow.getHours();
+  if (hours < 13) {
+    period = 'AM';
+  } else {
+    period = 'PM';
+    hours -= 12;
+  }
+  hours = hours.toString().padStart(2, '0');
+  var date = day + "/" + month + "/" + year;
+  var time = hours + ":" + minutes + period;
+  return { date: date, time: time };
+}
+
+form.addEventListener("submit", function (e) {
+  var formData = new FormData(form);
+  var registration = getDate();
+  var record = {
+    'days': [],
+    registration: registration,
+    city: ''
+  };
+  e.preventDefault();
+  formData.forEach(function (data, key) {
+    return key === "days" ? record.days.push([data]) : record[key] = data;
+  });
+  insertUserInTable([record]);
+  createUserListener([record]);
+});
