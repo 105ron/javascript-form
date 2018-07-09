@@ -315,11 +315,11 @@ Users table
     font-size: 12px; }
     .users-table .row .row-container li {
       padding: 10px 0;
-      flex-basis: 16%; }
-      .users-table .row .row-container li:nth-child(2) {
-        flex-basis: 19%; }
+      flex-basis: 14%; }
+      .users-table .row .row-container li:nth-child(2), .users-table .row .row-container li:nth-child(5) {
+        flex-basis: 17%; }
       .users-table .row .row-container li:nth-child(3) {
-        flex-basis: 9%; }
+        flex-basis: 8%; }
       .users-table .row .row-container li:nth-child(7) {
         text-align: center;
         flex-basis: 2%; }

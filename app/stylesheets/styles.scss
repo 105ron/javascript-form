@@ -408,12 +408,12 @@ Users table
       font-size: 12px;
       li {
         padding: 10px 0;
-        flex-basis: 16%;
-        &:nth-child(2) {
-          flex-basis: 19%;
+        flex-basis: 14%;
+        &:nth-child(2), &:nth-child(5) {
+          flex-basis: 17%;
         }
         &:nth-child(3) {
-        flex-basis: 9%;
+        flex-basis: 8%;
         }
         &:nth-child(7) {
           text-align: center;

@@ -108,6 +108,29 @@ function createUserListener(users) {
   });
 }
 
+function getformattedDays(days) {
+  var regexDictionary = [{
+    regex: /^S.{34}/,
+    result: 'Every day'
+  }, {
+    regex: /^M.{21}i, /,
+    result: "Weeks Days"
+  }, {
+    regex: /^S.{6}t, /,
+    result: "Weekends"
+  }, {
+    regex: /, $/,
+    result: ""
+  }, {
+    regex: /^/,
+    result: "None"
+  }];
+  var correctRegex = regexDictionary.find(function (dictionary) {
+    return dictionary.regex.test(days);
+  });
+  return days.replace(correctRegex.regex, correctRegex.result); //No check boxes
+}
+
 function getFormattedDate() {
   var period = void 0;
   var dateNow = new Date();
@@ -130,22 +153,21 @@ function getFormattedDate() {
 
 form.addEventListener("submit", function (e) {
   var formData = new FormData(form);
+  var days = '';
   var registration = getFormattedDate();
-  var record = {
-    'days': [],
-    registration: registration,
-    city: ''
-  };
+  var record = { registration: registration, city: '' };
   e.preventDefault();
   formData.forEach(function (data, key) {
-    return key === "days" ? record.days.push([data]) : record[key] = data;
+    return key === "days" ? days += data + ", " : record[key] = data;
   });
+  record.days = getformattedDays(days);
   insertUserInTable([record]);
   createUserListener([record]);
-  e.target.reset();
+  //e.target.reset();
 });
 
 cancelButton.addEventListener("click", function (e) {
+  var form = document.getElementById("cycleForm");
   e.preventDefault();
   form.reset();
 });
