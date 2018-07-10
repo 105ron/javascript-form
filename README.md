@@ -19,7 +19,10 @@ Go to the root of the project install all dependencies with NPM:
 * `cd javascript-form`
 * `npm install`
 
-After installation, updates can be made to the following development files:
+After installation, start the gulp server:
+* `gulp watch`
+
+Updates can be made to the following development files (Gulp watch task must be running):
 * `./app/index.html` 
 * `./app/stylesheets/styles.scss`
 * `./app/scripts/app.js`
