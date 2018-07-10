@@ -7,22 +7,27 @@ Any future development work will require the installation of Gulp.
 
 ## Run this locally
 Clone this repository in the terminal:
-* `git clone git@github.com:105ron/javascript-form.git` 
+
+`:~ $> git clone git@github.com:105ron/javascript-form.git` 
 
 Open the root `index.html` in the browser of your choice.
 
 ## Develop this locally
 Clone this repository in the terminal:
+
 `:~ $> git clone git@github.com:105ron/javascript-form.git` 
 
 Go to the root of the project install all dependencies with NPM:
+
 `:~ $> cd javascript-form`
 `:~ $> npm install`
 
 After installation, start the gulp server:
+
 `:~ $> gulp watch`
 
 Updates can be made to the following development files (Gulp watch task must be running):
+
 `./app/index.html` 
 `./app/stylesheets/styles.scss`
 `./app/scripts/app.js`
