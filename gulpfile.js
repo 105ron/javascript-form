@@ -18,7 +18,10 @@ gulp.task('transpile', function () {
 gulp.task('sass', function() {
   return gulp.src('app/stylesheets/styles.scss').
     pipe(sass()).
-    pipe(autoprefixer()).
+    pipe(autoprefixer({
+      browsers: ['last 6 versions'],
+      cascade: false
+    })).
     pipe(gulp.dest('./app/stylesheets/')).
     pipe(gulp.dest('./stylesheets')).
     pipe(browserSync.reload({

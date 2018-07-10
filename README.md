@@ -1,2 +1,6 @@
 # Dummy-App
-Dummy app is a single page that is part of an application for sports enthusiasts to register their names to lists of their favourite sporting activites and what days they are available to participate.
+Dummy app is a single page that is part of an application for sports enthusiasts to register their names to lists of their favourite sporting activities and what days they are available to participate.
+
+Gulp was used in development to monitor the development files in `/app`. Styling was modified in `./app/stylesheets/styles.scss` with Gulp converting Sass styles to CSS, with auto-prefixer included to add CSS vendor prefixes to allow support for older browsers. Gulp Babel also transpiles `./app/scripts/app.js` to ES5 JavaScript in `./scripts/app.js`. Both `index.html` files will load the page, but the root `index.html` is better supported for older browsers as it is ES5 compliant. 
+
+Any future development work will require the installation of Gulp. Clone this repository, and in the root of the project run `npm install` to install all dependencies. After installation, updates can be made to the development files `./app/index.html`. `./app/stylesheets/styles.scss` and `./app/scripts/app.js`. Any changes made to these files will be updated to the development server provided by Gulp at `localhost:3000`
