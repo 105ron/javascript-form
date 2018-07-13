@@ -391,6 +391,7 @@ Users table
     .header {
       background-color: $bright-green;
       border-bottom: 1px solid $black;
+      font-weight: bold;
       &:hover {
         cursor: auto;
       }

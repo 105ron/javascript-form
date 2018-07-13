@@ -1,12 +1,109 @@
 "use strict";
 
-(function () {
+{
+  var createUserRow = function createUserRow(user) {
+    return "<li class='row'>\n      <ul class='row-container'>\n      <li>" + user.name + "</li>\n      <li>" + user.email + "</li>\n      <li>" + user.city + "</li>\n      <li>" + user.group + "</li>\n      <li>" + user.days + "</li>\n      <li>\n      <span>" + user.registration.date + "</span>\n      <span class='time'>" + user.registration.time + "</span>\n      </li>\n      <li class='trash' id='" + user.email + "'>\n      <i class='fas fa-trash-alt'></i>\n      </li>\n      </ul>\n      </li>";
+  };
+
+  var deleteRow = function deleteRow(e) {
+    // Traverse dom from trash can to delete it parent li.row
+    e.target.parentNode.parentNode.parentNode.removeChild(e.target.parentNode.parentNode);
+  };
+
+  var createUserListener = function createUserListener(users) {
+    // Given an array of users objects, find the trash icon by email and attach click event
+    var trashList = users.map(function (user) {
+      return document.getElementById(user.email);
+    });
+    trashList.forEach(function (trashCan) {
+      return trashCan.addEventListener("click", deleteRow);
+    });
+  };
+
+  var formatDateTime = function formatDateTime(number) {
+    return number.toString().padStart(2, "0");
+  };
+
+  var getFormattedDate = function getFormattedDate() {
+    var period = void 0;
+    var dateNow = new Date();
+    var year = dateNow.getFullYear();
+    var month = formatDateTime(dateNow.getMonth() + 1);
+    var day = formatDateTime(dateNow.getDate());
+    var minutes = formatDateTime(dateNow.getMinutes());
+    var hours = dateNow.getHours();
+    // Convert 24 hour time to AM/PM
+    if (hours < 13) {
+      period = "AM";
+    } else {
+      period = "PM";
+      hours -= 12;
+    }
+    hours = formatDateTime(hours);
+    var date = day + "/" + month + "/" + year;
+    var time = hours + ":" + minutes + period;
+    return { date: date, time: time };
+  };
+
+  var getformattedDays = function getformattedDays(days) {
+    var regexDictionary = [{
+      regex: /^S.{34}/,
+      result: "Every day"
+    }, {
+      regex: /^M.{21}i, /,
+      result: "Week Days"
+    }, {
+      regex: /^S.{6}t, /,
+      result: "Weekends"
+    }, {
+      regex: /, $/,
+      result: "" // Cleans trailing comma for any other cases
+    }, {
+      regex: /^/,
+      result: "None" // User checked no boxes
+    }];
+    // Iterate array to find the correct regex and use it to send the formatted day
+    var correctRegex = regexDictionary.find(function (dictionary) {
+      return dictionary.regex.test(days);
+    });
+    return days.replace(correctRegex.regex, correctRegex.result);
+  };
+
+  var insertUserInTable = function insertUserInTable(users) {
+    // Convert array of users objects into array html, join and insert into table
+    var userTable = users.map(function (userData) {
+      return createUserRow(userData);
+    });
+    table.insertAdjacentHTML("beforeend", userTable.join(""));
+    createUserListener(users);
+  };
+
+  var validNameOrEmail = function validNameOrEmail(email, name) {
+    var alertPhrase = "";
+    if (email && document.getElementById(email)) {
+      // Only check if email is entered
+      alertPhrase = "Email must be unique";
+    }
+    if (email.length < 6 || name.length < 2) {
+      alertPhrase = "Please enter a name of 3 characters or more and email of 7 characters or more";
+    }
+    if (alertPhrase) {
+      alert(alertPhrase);
+      return false;
+    }
+    return true;
+  };
+
+  /* ****************************************
+  Add users to table
+  **************************************** */
+
   var closeButton = document.getElementById("helpButton");
   var slider = document.getElementById("slideElement");
   var form = document.getElementById("cycleForm");
   var table = document.getElementById("table");
   var cancelButton = document.getElementById("cancel");
-  var users = [{
+  var usersData = [{
     city: "City",
     days: "Every day",
     email: "neutron@example.com",
@@ -68,110 +165,13 @@
     }
   }];
 
-  function createUserRow(user) {
-    return "<li class='row'>\n      <ul class='row-container'>\n      <li>" + user.name + "</li>\n      <li>" + user.email + "</li>\n      <li>" + user.city + "</li>\n      <li>" + user.group + "</li>\n      <li>" + user.days + "</li>\n      <li>\n      <span>" + user.registration.date + "</span>\n      <span class='time'>" + user.registration.time + "</span>\n      </li>\n      <li class='trash' id='" + user.email + "'>\n      <i class='fas fa-trash-alt'></i>\n      </li>\n      </ul>\n      </li>";
-  }
-
-  function deleteRow(e) {
-    // Traverse dom from trash can to delete it parent li.row
-    e.target.parentNode.parentNode.parentNode.removeChild(e.target.parentNode.parentNode);
-  }
-  function createUserListener(users) {
-    // Given an array of users objects, find the trash icon by email and attach click event
-    var trashList = users.map(function (user) {
-      return document.getElementById(user.email);
-    });
-    trashList.forEach(function (trashCan) {
-      return trashCan.addEventListener("click", deleteRow);
-    });
-  }
-
-  function formatDateTime(number) {
-    return number.toString().padStart(2, "0");
-  }
-
-  function getFormattedDate() {
-    var period = void 0;
-    var dateNow = new Date();
-    var year = dateNow.getFullYear();
-    var month = formatDateTime(dateNow.getMonth() + 1);
-    var day = formatDateTime(dateNow.getDate());
-    var minutes = formatDateTime(dateNow.getMinutes());
-    var hours = dateNow.getHours();
-    // Convert 24 hour time to AM/PM
-    if (hours < 13) {
-      period = "AM";
-    } else {
-      period = "PM";
-      hours -= 12;
-    }
-    hours = formatDateTime(hours);
-    var date = day + "/" + month + "/" + year;
-    var time = hours + ":" + minutes + period;
-    return { date: date, time: time };
-  }
-
-  function getformattedDays(days) {
-    var regexDictionary = [{
-      regex: /^S.{34}/,
-      result: "Every day"
-    }, {
-      regex: /^M.{21}i, /,
-      result: "Week Days"
-    }, {
-      regex: /^S.{6}t, /,
-      result: "Weekends"
-    }, {
-      regex: /, $/,
-      result: "" // Cleans trailing comma for any other cases
-    }, {
-      regex: /^/,
-      result: "None" // User checked no boxes
-    }];
-    // Iterate array to find the correct regex and use it to send the formatted day
-    var correctRegex = regexDictionary.find(function (dictionary) {
-      return dictionary.regex.test(days);
-    });
-    return days.replace(correctRegex.regex, correctRegex.result);
-  }
-
-  function insertUserInTable(users) {
-    // Convert array of users objects into array html, join and insert into table
-    var userTable = users.map(function (userData) {
-      return createUserRow(userData);
-    });
-    table.insertAdjacentHTML("beforeend", userTable.join(""));
-    createUserListener(users);
-  }
-
-  function invalidNameOrEmail(email, name) {
-    var alertPhrase = "";
-    if (email && document.getElementById(email)) {
-      // Only check if email is entered
-      alertPhrase = "Email must be unique";
-    }
-    if (email.length < 6 || name.length < 2) {
-      alertPhrase = "Please enter a name of 3 characters or more and email of 7 characters or more";
-    }
-    if (alertPhrase) {
-      alert(alertPhrase);
-      return true;
-    }
-    return false;
-  }
-
-  /* ****************************************
-  Add users to table
-  **************************************** */
-
-  insertUserInTable(users);
+  insertUserInTable(usersData);
 
   /* ****************************************
   Listeners
   **************************************** */
 
   cancelButton.addEventListener("click", function (e) {
-    var form = document.getElementById("cycleForm");
     e.preventDefault();
     form.reset();
   });
@@ -189,16 +189,22 @@
     e.preventDefault();
     var days = "";
     var registration = getFormattedDate(); // Get registration date/time object
-    var record = { registration: registration, city: "", name: "", email: "" };
-    var form = document.getElementById("cycleForm");
+    var record = {
+      registration: registration,
+      city: "",
+      name: "",
+      email: ""
+    };
     var formData = new FormData(form);
     formData.forEach(function (data, key) {
-      key === "days" ? days += data + ", " : record[key] = data;
+      if (key === "days") {
+        days += data + ", ";
+      } else {
+        record[key] = data;
+      }
     });
     record.days = getformattedDays(days); // Convert days to weekend/weekdays string
-    if (invalidNameOrEmail(record.email, record.name)) {
-      return; // Don't let function finish if email or username isn't entered correctly
-    } else {
+    if (validNameOrEmail(record.email, record.name)) {
       insertUserInTable([record]);
       e.target.reset(); // Reset form fields
     }
@@ -212,4 +218,4 @@
       closeButton.innerText = "Open ↓";
     }
   });
-})();
+}

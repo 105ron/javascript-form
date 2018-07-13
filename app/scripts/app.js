@@ -1,10 +1,10 @@
-(function() {
+{
   const closeButton = document.getElementById("helpButton");
   const slider = document.getElementById("slideElement");
   const form = document.getElementById("cycleForm");
   const table = document.getElementById("table");
   const cancelButton = document.getElementById("cancel");
-  const users = [
+  const usersData = [
     {
       city: "City",
       days: "Every day",
@@ -13,8 +13,8 @@
       name: "James Issac Neutron",
       registration: {
         date: "13/08/2018",
-        time: "11:29AM"
-      }
+        time: "11:29AM",
+      },
     },
     {
       city: "City",
@@ -24,8 +24,8 @@
       name: "Carl Wheezer",
       registration: {
         date: "13/08/2018",
-        time: "00:29AM"
-      }
+        time: "00:29AM",
+      },
     },
     {
       city: "City",
@@ -35,8 +35,8 @@
       name: "Cindy Vortex",
       registration: {
         date: "13/08/2018",
-        time: "11:29AM"
-      }
+        time: "11:29AM",
+      },
     },
     {
       city: "City",
@@ -46,8 +46,8 @@
       name: "Sheen Estevez",
       registration: {
         date: "13/08/2018",
-        time: "11:29AM"
-      }
+        time: "11:29AM",
+      },
     },
     {
       city: "City",
@@ -57,8 +57,8 @@
       name: "Libby Folfax",
       registration: {
         date: "13/08/2018",
-        time: "11:29AM"
-      }
+        time: "11:29AM",
+      },
     },
     {
       city: "City",
@@ -68,9 +68,9 @@
       name: "Nick Dean",
       registration: {
         date: "13/08/2018",
-        time: "11:29AM"
-      }
-    }
+        time: "11:29AM",
+      },
+    },
   ];
 
   function createUserRow(user) {
@@ -94,19 +94,15 @@
 
   function deleteRow(e) {
     // Traverse dom from trash can to delete it parent li.row
-    e.target.parentNode.parentNode.parentNode.removeChild(
-      e.target.parentNode.parentNode
-    );
+    e.target.parentNode.parentNode.parentNode.removeChild(e.target.parentNode.parentNode);
   }
   function createUserListener(users) {
     // Given an array of users objects, find the trash icon by email and attach click event
     const trashList = users.map(user => document.getElementById(user.email));
-    trashList.forEach(trashCan =>
-      trashCan.addEventListener("click", deleteRow)
-    );
+    trashList.forEach(trashCan => trashCan.addEventListener("click", deleteRow));
   }
 
-  function formatDateTime (number) {
+  function formatDateTime(number) {
     return number.toString().padStart(2, "0");
   }
 
@@ -135,42 +131,38 @@
     const regexDictionary = [
       {
         regex: /^S.{34}/,
-        result: "Every day"
+        result: "Every day",
       },
       {
         regex: /^M.{21}i, /,
-        result: "Week Days"
+        result: "Week Days",
       },
       {
         regex: /^S.{6}t, /,
-        result: "Weekends"
+        result: "Weekends",
       },
       {
         regex: /, $/,
-        result: "" // Cleans trailing comma for any other cases
+        result: "", // Cleans trailing comma for any other cases
       },
       {
         regex: /^/,
-        result: "None" // User checked no boxes
-      }
+        result: "None", // User checked no boxes
+      },
     ];
     // Iterate array to find the correct regex and use it to send the formatted day
-    const correctRegex = regexDictionary.find(function(dictionary) {
-      return dictionary.regex.test(days);
-    });
+    const correctRegex = regexDictionary.find(dictionary => dictionary.regex.test(days));
     return days.replace(correctRegex.regex, correctRegex.result);
   }
 
   function insertUserInTable(users) {
     // Convert array of users objects into array html, join and insert into table
-    const userTable = users.map(function(userData) {
-      return createUserRow(userData);
-    });
+    const userTable = users.map(userData => createUserRow(userData));
     table.insertAdjacentHTML("beforeend", userTable.join(""));
     createUserListener(users);
   }
 
-  function invalidNameOrEmail(email, name) {
+  function validNameOrEmail(email, name) {
     let alertPhrase = "";
     if (email && document.getElementById(email)) {
       // Only check if email is entered
@@ -181,28 +173,27 @@
     }
     if (alertPhrase) {
       alert(alertPhrase);
-      return true;
+      return false;
     }
-    return false;
+    return true;
   }
 
   /* ****************************************
   Add users to table
   **************************************** */
 
-  insertUserInTable(users);
+  insertUserInTable(usersData);
 
   /* ****************************************
   Listeners
   **************************************** */
 
-  cancelButton.addEventListener("click", function (e) {
-    const form = document.getElementById("cycleForm");
+  cancelButton.addEventListener("click", (e) => {
     e.preventDefault();
     form.reset();
   });
 
-  closeButton.addEventListener("click", function() {
+  closeButton.addEventListener("click", () => {
     // Make the help button interactive
     if (slider.classList.contains("active")) {
       slider.classList.remove("active");
@@ -211,26 +202,32 @@
     }
   });
 
-  form.addEventListener("submit", function(e) {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
     let days = "";
     const registration = getFormattedDate(); // Get registration date/time object
-    const record = { registration, city: "", name: "", email: "" };
-    const form = document.getElementById("cycleForm");
+    const record = {
+      registration,
+      city: "",
+      name: "",
+      email: "",
+    };
     const formData = new FormData(form);
-    formData.forEach(function(data, key) {
-      key === "days" ? (days += `${data}, `) : (record[key] = data);
+    formData.forEach((data, key) => {
+      if (key === "days") {
+        days += `${data}, `;
+      } else {
+        record[key] = data;
+      }
     });
     record.days = getformattedDays(days); // Convert days to weekend/weekdays string
-    if (invalidNameOrEmail(record.email, record.name)) {
-      return;// Don't let function finish if email or username isn't entered correctly
-    } else {
+    if (validNameOrEmail(record.email, record.name)) {
       insertUserInTable([record]);
       e.target.reset(); // Reset form fields
     }
   });
 
-  slider.addEventListener("transitionend", function() {
+  slider.addEventListener("transitionend", () => {
     // Change the help button label after the animation has finished sliding
     if (slider.classList.contains("active")) {
       closeButton.innerText = "Close ↑";
@@ -238,4 +235,4 @@
       closeButton.innerText = "Open ↓";
     }
   });
-}());
+}

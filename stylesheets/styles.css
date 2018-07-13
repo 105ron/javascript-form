@@ -357,7 +357,8 @@ Users table
       transition: opacity 0.8s; }
   .users-table .row .header {
     background-color: #34A00F;
-    border-bottom: 1px solid #000; }
+    border-bottom: 1px solid #000;
+    font-weight: bold; }
     .users-table .row .header:hover {
       cursor: auto; }
     .users-table .row .header li {
